@@ -38,6 +38,9 @@
                     <div class="text-xs text-gray-500 dark:text-gray-400">
                         {{ $game->ratings->count() }} note(s) • {{ $game->reviews->count() }} avis
                     </div>
+                    <div class="text-xs font-medium text-amber-600 dark:text-amber-400 mt-1">
+                        Hype : {{ $hypeScore }} pt(s) ({{ $hypeCount }} vote(s))
+                    </div>
                 </div>
             </div>
 
