@@ -46,6 +46,7 @@ class GameController extends Controller
         $game->load([
             'reviews.user',
             'ratings',
+            'hypes',
         ]);
 
         $averageRating = $game->ratings->isNotEmpty()
@@ -56,6 +57,15 @@ class GameController extends Controller
             ? $game->ratings->firstWhere('user_id', auth()->id())
             : null;
 
-        return view('games.show', compact('game', 'averageRating', 'userRating'));
+        $hypeScore = (int) $game->hypes->sum('hype_level');
+        $hypeCount = $game->hypes->count();
+
+        return view('games.show', compact(
+            'game',
+            'averageRating',
+            'userRating',
+            'hypeScore',
+            'hypeCount'
+        ));
     }
 }
