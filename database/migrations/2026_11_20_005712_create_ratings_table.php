@@ -8,26 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('cover_url')->nullable();
-            $table->string('developer')->nullable();
-            $table->string('publisher')->nullable();
-            $table->string('platform')->nullable(); // ex. PC, PS5, Xbox, Switch, Multi
-            $table->string('genre')->nullable();
-            $table->date('release_date')->nullable();
-            $table->boolean('is_released')->default(false);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('game_id')->constrained()->cascadeOnDelete();
+            $table->unsignedTinyInteger('score');
             $table->timestamps();
 
-            $table->index(['release_date', 'is_released']);
+            $table->unique(['user_id', 'game_id']);
+            $table->index('game_id');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('ratings');
     }
 };
